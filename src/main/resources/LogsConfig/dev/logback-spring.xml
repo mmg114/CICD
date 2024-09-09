@@ -1,0 +1,53 @@
+<configuration>
+
+    <!-- Appender para consola en el ambiente 'dev' -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender para guardar las request y response en archivo -->
+    <appender name="RQRP_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/rq-rp-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender para un log general sin incluir request/response -->
+    <appender name="MOABITS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/Moabits-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Logger general para todos los entornos -->
+    <logger name="com.moabits" level="INFO" additivity="false">
+        <appender-ref ref="MOABITS"/>
+    </logger>
+
+    <!-- Logger específico para capturar requests y responses -->
+    <logger name="org.springframework.web" level="INFO" additivity="false">
+        <appender-ref ref="RQRP_FILE"/>
+    </logger>
+
+    <!-- Logger por consola solo para 'dev' -->
+    <springProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <root level="INFO">
+        <appender-ref ref="MOABITS"/>
+    </root>
+
+</configuration>

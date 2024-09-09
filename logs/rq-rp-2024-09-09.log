@@ -1,0 +1,4 @@
+2024-09-09 09:20:10 - Initializing Servlet 'dispatcherServlet'
+2024-09-09 09:20:10 - Completed initialization in 0 ms
+2024-09-09 09:20:58 - Request: method=POST, uri=/users, params=null, body={"name": "mangito","email": "amasdolas","orders": [] }
+2024-09-09 09:20:58 - Response: status=200, body={"id":15,"name":"mangito","email":"amasdolas","orders":[]}

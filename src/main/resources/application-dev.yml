@@ -1,0 +1,43 @@
+server:
+    port: 8080
+logging:
+    config: classpath:LogsConfig/dev/logback-spring.xml
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5432/cicd
+        username: postgres
+        password: 123456
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        show-sql: true       # Muestra las consultas SQL en la consola
+        properties:
+            hibernate:
+                format_sql: true
+#    flyway:
+#        enabled: true        # Habilita Flyway para la gesti�n de migraciones de base de datos
+#        baseline-on-migrate: true # Aplica migraciones si la base de datos est� vac�a
+#        locations: classpath:db/migration
+#        url: jdbc:postgresql://localhost:5432/cicd
+#        user: postgres
+#        password: 123456
+    logging:
+        level:
+            org.hibernate.SQL: DEBUG    # Configura el nivel de logging para ver las consultas SQL generadas
+management:
+    endpoints:
+        web:
+            exposure:
+                include: health, info, metrics, env, beans  # Lista de endpoints que estar�n expuestos
+    endpoint:
+        health:
+            show-details: always  # Muestra detalles adicionales en el endpoint de /health
+            probes:
+                enabled: true        # Habilita las sondas de salud (liveness, readiness)
+    health:
+        db:
+            enabled: true          # Habilita el chequeo de salud para la base de datos
+    metrics:
+        enable:
+            all: true              # Habilita la recopilaci�n de todas las m�tricas
+    server:
+        port: 8083              # Puedes exponer los endpoints en un puerto diferente al de tu aplicaci�n principal
